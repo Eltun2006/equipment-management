@@ -8,6 +8,7 @@ from flask_socketio import SocketIO
 from dotenv import load_dotenv
 
 from .config import config_by_name
+from .database import configure_database
 from .models import db, User, Equipment, Comment
 from .auth import auth_bp
 from .equipment import equipment_bp
@@ -23,6 +24,9 @@ def create_app(config_name: str | None = None) -> Flask:
     app = Flask(__name__)
     cfg = config_by_name.get(config_name or os.getenv("FLASK_ENV", "default"))
     app.config.from_object(cfg)
+
+    # Database config (supports SQLite by default, PostgreSQL via DATABASE_URL)
+    configure_database(app)
 
     # Init extensions
     db.init_app(app)
