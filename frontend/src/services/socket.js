@@ -18,3 +18,5 @@ export function joinEquipmentRoom(equipmentId) {
 export function leaveEquipmentRoom(equipmentId) {
   getSocket().emit('leave_equipment', { equipment_id: equipmentId })
 }
+
+

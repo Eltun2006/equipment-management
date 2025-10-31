@@ -63,3 +63,5 @@ def broadcast_comment_deleted(comment_id: int, equipment_id: int):
 
     count = db.session.scalar(db.select(func.count()).where(Comment.equipment_id == equipment_id)) or 0
     socketio.emit("comment_count_updated", {"equipment_id": equipment_id, "count": count}, broadcast=True)
+
+

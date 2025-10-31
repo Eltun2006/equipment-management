@@ -82,3 +82,5 @@ export default function CommentModal({ open, onClose, equipment }) {
     </Dialog>
   )
 }
+
+

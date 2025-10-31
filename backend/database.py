@@ -34,3 +34,5 @@ def configure_database(app) -> None:
     app.config["SQLALCHEMY_DATABASE_URI"] = get_database_uri()
     # Sensible engine options for prod Postgres
     app.config.setdefault("SQLALCHEMY_ENGINE_OPTIONS", {"pool_pre_ping": True})
+
+

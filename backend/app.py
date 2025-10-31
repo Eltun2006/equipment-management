@@ -31,7 +31,11 @@ def create_app(config_name: str | None = None) -> Flask:
     # Init extensions
     db.init_app(app)
     JWTManager(app)
-    CORS(app, resources={r"/api/*": {"origins": app.config.get("CORS_ORIGINS", ["*"])}})
+    # CORS configuration - allow all origins in dev, or use configured origins
+    cors_origins = app.config.get("CORS_ORIGINS", ["*"])
+    if isinstance(cors_origins, str):
+        cors_origins = [origin.strip() for origin in cors_origins.split(",")] if cors_origins else ["*"]
+    CORS(app, resources={r"/api/*": {"origins": cors_origins, "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], "allow_headers": ["Content-Type", "Authorization"]}})
 
     # Uploads directory (optional): keep directory for potential storage, but use request.files directly
     if not os.path.isdir(app.config["UPLOADED_EXCELS_DEST"]):
@@ -113,8 +117,9 @@ def seed_data():
     db.session.commit()
 
 
+app = create_app()
+
 if __name__ == "__main__":
-    app = create_app()
     # Use port from env or default 5000
     port = int(os.getenv("PORT", 5000))
     # Eventlet is installed; SocketIO will pick it. Set allow_unsafe_werkzeug for local dev if necessary.
