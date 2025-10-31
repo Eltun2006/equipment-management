@@ -1,3 +1,11 @@
--r project/backend/requirements.txt
-
-
+# Vercel deployment requirements
+# All dependencies needed for the Flask API
+flask==3.0.3
+Flask-JWT-Extended==4.6.0
+Flask-Cors==4.0.1
+Flask-SQLAlchemy==3.1.1
+SQLAlchemy==2.0.36
+werkzeug==3.0.4
+python-dotenv==1.0.1
+pandas==2.2.3
+openpyxl==3.1.5
